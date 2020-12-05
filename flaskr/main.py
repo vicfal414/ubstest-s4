@@ -116,9 +116,9 @@ def create_app(test_config=None):
             password = request.form['password']
             # cur = mysql.connection.cursor()
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
@@ -157,9 +157,9 @@ def create_app(test_config=None):
             fname = request.form['fname']
             lname = request.form['lname']
             connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b33b6415873ff5',
-                    password='d1a1b9a1',
-                    db='heroku_1e2700f5b989c0b',
+                    user='b2cb10b2b21b72',
+                    password='1b8b9cc5',
+                    db='heroku_318469e412eb0ae',
                     charset='utf8mb4',
                     cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
