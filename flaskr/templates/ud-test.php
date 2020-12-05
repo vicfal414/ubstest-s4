@@ -62,21 +62,21 @@
   }
 
   // SAVED CHALLENGES
-  $savedQ = "SELECT saved FROM dash WHERE user='vic'";
+  $savedQ = "SELECT saved FROM dash WHERE user='test'";
   $saved = $conn->query($savedQ);
   $rowS = $saved->fetch_assoc();
   $s = $rowS["saved"];
   $sList = explode('|', $s);
 
   // PROGRESS CHALLENGES
-  $progressQ = "SELECT progress FROM dash WHERE user='vic'";
+  $progressQ = "SELECT progress FROM dash WHERE user='test'";
   $progress = $conn->query($progressQ);
   $rowP = $progress->fetch_assoc();
   $p = $rowP["progress"];
   $pList = explode('|', $p);
 
   // COMPLETED CHALLENGES
-  $completedQ = "SELECT completed FROM dash WHERE user='vic'";
+  $completedQ = "SELECT completed FROM dash WHERE user='test'";
   $completed = $conn->query($completedQ);
   $rowC = $completed->fetch_assoc();
   $c = $rowC["completed"];
@@ -94,11 +94,11 @@
           <p> Eco Superstar</p>
           <div class="row">
             <div class="col">
-              <?php echo '<h2>' . sizeof($cList) . '</h2>'?>
+              <h2> <?php echo sizeof($cList); ?> </h2>
               <p>completed</p>
             </div>
             <div class="col">
-              <?php echo '<h2>' .sizeof($pList) . '</h2>' ?>
+              <h2> <?php echo sizeof($pList); ?> </h2>
               <p>in progress</p>
             </div>
           </div>
@@ -159,7 +159,7 @@
             <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
             </svg>
           </div>
-        <?php endforeach ?>
+        <?php endforeach; ?>
       </div>
     </div>
 
