@@ -62,21 +62,21 @@
   }
 
   // SAVED CHALLENGES
-  $savedQ = "SELECT saved FROM dash WHERE user='vic'";
+  $savedQ = "SELECT saved FROM dash WHERE user='test'";
   $saved = $conn->query($savedQ);
   $rowS = $saved->fetch_assoc();
   $s = $rowS["saved"];
   $sList = explode('|', $s);
 
   // PROGRESS CHALLENGES
-  $progressQ = "SELECT progress FROM dash WHERE user='vic'";
+  $progressQ = "SELECT progress FROM dash WHERE user='test'";
   $progress = $conn->query($progressQ);
   $rowP = $progress->fetch_assoc();
   $p = $rowP["progress"];
   $pList = explode('|', $p);
 
   // COMPLETED CHALLENGES
-  $completedQ = "SELECT completed FROM dash WHERE user='vic'";
+  $completedQ = "SELECT completed FROM dash WHERE user='test'";
   $completed = $conn->query($completedQ);
   $rowC = $completed->fetch_assoc();
   $c = $rowC["completed"];
