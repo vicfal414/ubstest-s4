@@ -61,36 +61,41 @@
     die('Could not connect: ' . mysql_error());
   }
 
-  // SAVED CHALLENGES
-  $savedQ = "SELECT saved FROM dash WHERE user='test'";
-  $saved = mysqli_query($conn,$savedQ);
-//   $saved = $conn->query($savedQ);
-  $rowS = mysqli_fetch_array($saved);
-//   $rowS = $saved->fetch_assoc();
-  $s = $rowS["saved"];
-  $sList = explode('|', $s);
+ // SAVED CHALLENGES
+    $savedQ = "SELECT saved FROM dash WHERE user='vic'";
+    $saved = $conn->query($savedQ);
+    $rowS = $saved->fetch_assoc();
+    $s = $rowS["saved"];
+    $sList = explode(' ', $s);
+    foreach ($sList as $i => $sitem){
+      echo $sitem;
+    }
 
-  // PROGRESS CHALLENGES
-  $progressQ = "SELECT progress FROM dash WHERE user='test'";
-  $progress = mysqli_query($conn,$progressQ);
-//   $progress = $conn->query($progressQ);
-  $rowP = mysqli_fetch_array($progress);
-//   $rowP = $progress->fetch_assoc();
-  $p = $rowP["progress"];
-  $pList = explode('|', $p);
+    // PROGRESS CHALLENGES
+    $progressQ = "SELECT progress FROM dash WHERE user='vic'";
+    $progress = $conn->query($progressQ);
+    $rowP = $progress->fetch_assoc();
+    $p = $rowP["progress"];
+    $pList = explode(' ', $p);
+    foreach ($pList as $i => $pitem){
+      echo $pitem;
+    }
 
-  // COMPLETED CHALLENGES
-  $completedQ = "SELECT completed FROM dash WHERE user='test'";
-  $completed = mysqli_query($conn,$completedQ);
-//   $completed = $conn->query($completedQ);
-  $rowC = mysqli_fetch_array($completed);
-//   $rowC = $completed->fetch_assoc();
-  $c = $rowC["completed"];
-  $cList = explode('|', $c);
-  ?>
+    // COMPLETED CHALLENGES
+    $completedQ = "SELECT completed FROM dash WHERE user='vic'";
+    $completed = $conn->query($completedQ);
+    $rowC = $completed->fetch_assoc();
+    $c = $rowC["completed"];
+    $cList = explode(' ', $c);
+    foreach ($cList as $i => $citem){
+      echo $citem;
+    }
 
-  {% if session['logged_in'] == True %}
-  <div class="container">
+
+    ?>
+
+    {% if session['logged_in'] == True %}
+    <div class="container">
     <div class="container">
       <div class="row">
         <div class="col-1">
@@ -100,11 +105,11 @@
           <p> Eco Superstar</p>
           <div class="row">
             <div class="col">
-              <h2> <?php echo sizeof($cList); ?> </h2>
+              <?php echo '<h2>' . sizeof($cList) . '</h2>'?>
               <p>completed</p>
             </div>
             <div class="col">
-              <h2> <?php echo sizeof($pList); ?> </h2>
+              <?php echo '<h2>' .sizeof($pList) . '</h2>' ?>
               <p>in progress</p>
             </div>
           </div>
@@ -117,23 +122,40 @@
       </div>
     </div>
     <br>
-
     <!-- IN PROGRESS SECTION -->
     <div class="container">
       <div class="row greenback">
         <h3>IN PROGRESS</h3>
       </div>
       <div class="row greenborder">
-        <?php foreach ($pList as $i => $pitem): ?>
-          <div class="col-4">
-            <p> <?php echo $pitem; ?> </p>
-          </div><div class="col-8">
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
-              </div>
-            </div>
+        <!-- challenge progress bar -->
+        <div class="col-4">
+          <p>Challenge Title</p>
+        </div>
+        <div class="col-8">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
           </div>
-        <?php endforeach; ?>
+        </div>
+        <!-- end of progress bar -->
+        <div class="col-4">
+          <p>Challenge Title</p>
+        </div>
+        <div class="col-8">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 64%"></div>
+          </div>
+        </div>
+        <!-- end of challenge 2 -->
+        <div class="col-4">
+          <p>Challenge Title</p>
+        </div>
+        <div class="col-8">
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 15%"></div>
+          </div>
+        </div>
+        <!-- end of challenge 3 -->
       </div>
     </div>
     <br>
@@ -144,10 +166,37 @@
         <h3>SAVED</h3>
       </div>
       <div class="row greenborder">
-        <?php foreach ($sList as $i => $sitem): ?>
-          <div class="col-3 ctsize">
-            <p> <?php echo $sitem; ?> </p>
-        <?php endforeach; ?>
+        <!-- first challenge -->
+        <div class="col-3 ctsize">
+          <p>Challenge title</p>
+          <a href="#" class="btn btn-secondary btnbtm">Details</a>
+        </div>
+        <!-- second -->
+        <div class="col-3 ctsize">
+          <p>Challenge title</p>
+          <a href="#" class="btn btn-secondary btnbtm">Details</a>
+        </div>
+        <!-- third -->
+        <div class="col-3 ctsize">
+          <p>Challenge title</p>
+          <a href="#" class="btn btn-secondary btnbtm">Details</a>
+        </div>
+        <!-- fourth -->
+        <div class="col-3 ctsize">
+          <p>Challenge title</p>
+          <a href="#" class="btn btn-secondary btnbtm">Details</a>
+        </div>
+        <!-- fifth -->
+        <div class="col-3 ctsize">
+          <p>Challenge title</p>
+          <a href="#" class="btn btn-secondary btnbtm">Details</a>
+        </div>
+        <!-- sixth -->
+        <div class="col-3 ctsize">
+          <p>Challenge title</p>
+          <a href="#" class="btn btn-secondary btnbtm">Details</a>
+        </div>
+        <!-- end -->
       </div>
     </div>
     <br>
@@ -158,14 +207,35 @@
         <h3>COMPLETED</h3>
       </div>
       <div class="row greenborder">
-        <?php
-        <? php foreach ($cList as $i => $citem): ?>
-          <div class="col-3 ctsize">
-            <p> <?php echo $citem; ?> </p>
-            <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-            </svg>
-          </div>
-        <?php endforeach; ?>
+
+        <div class="col-3 ctsize">
+          <p>Challenge Title</p>
+          <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+        </div>
+
+        <div class="col-3 ctsize">
+          <p>Challenge Title</p>
+          <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+        </div>
+
+        <div class="col-3 ctsize">
+          <p>Challenge Title</p>
+          <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+        </div>
+
+        <div class="col-3 ctsize">
+          <p>Challenge Title</p>
+          <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+          </svg>
+        </div>
+
       </div>
     </div>
 
