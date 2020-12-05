@@ -63,21 +63,27 @@
 
   // SAVED CHALLENGES
   $savedQ = "SELECT saved FROM dash WHERE user='test'";
+//   $saved = mysqli_query($conn,$savedQ);
   $saved = $conn->query($savedQ);
+//   $rowS = mysqli_fetch_array($saved);
   $rowS = $saved->fetch_assoc();
   $s = $rowS["saved"];
   $sList = explode('|', $s);
 
   // PROGRESS CHALLENGES
   $progressQ = "SELECT progress FROM dash WHERE user='test'";
+//   $progress = mysqli_query($conn,$progressQ);
   $progress = $conn->query($progressQ);
+//   $rowP = mysqli_fetch_array($progress);
   $rowP = $progress->fetch_assoc();
   $p = $rowP["progress"];
   $pList = explode('|', $p);
 
   // COMPLETED CHALLENGES
   $completedQ = "SELECT completed FROM dash WHERE user='test'";
+//   $completed = mysqli_query($conn,$completedQ);
   $completed = $conn->query($completedQ);
+//   $rowC = mysqli_fetch_array($completed);
   $rowC = $completed->fetch_assoc();
   $c = $rowC["completed"];
   $cList = explode('|', $c);
