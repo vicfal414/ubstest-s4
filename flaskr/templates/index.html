@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
+
+		<!-- import font -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+   		<script> (function (d, w, c) {
+				if(!d.getElementById("spd-busns-spt")) {
+					var n = d.getElementsByTagName('script')[0], s = d.createElement('script');
+					var loaded = false;
+					s.id = "spd-busns-spt";
+					s.async = "async";
+					s.setAttribute("data-self-init", "false");
+					s.setAttribute("data-init-type", "opt");
+					s.src = 'https://cdn.freshbots.ai/assets/share/js/freshbots.min.js';
+					s.setAttribute("data-client", "e1ece71687763b61981531a615fe82871bddfc90");
+					s.setAttribute("data-bot-hash", "53be4acd893ef7f23cb16f1de3146f7b1624b950");
+					s.setAttribute("data-env", "prod"); s.setAttribute("data-region", "us");
+					if (c) {
+						s.onreadystatechange = s.onload = function () {if (!loaded) { c(); } loaded = true; };
+					}
+					n.parentNode.insertBefore(s, n);
+				}
+			})
+			(document, window, function () {
+				Freshbots.initiateWidget({ autoInitChat: false, getClientParams: function () { return ; }}, function(successResponse) { }, function(errorResponse) { });
+			});
+		</script>
+
+		<title>Homepage</title>
+	</head>
+	<body>
+		<!--Navbar-->
+		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #86E49E;">
+			<a class="navbar-brand" href="#"><img src = "static/logo.png" class="img-fluid" width="30" height="30" alt="">(Yo)UB Sustainable</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('chall') }}">Challenges</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('friend') }}">Friends</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('dash') }}">Dashboard</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% if session['logged_in'] == True %}
+					<p>Hello {{session.username}}!</p>
+						<li>
+							<a href="{{ url_for('logout') }}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+						</li>
+                    {% else %}
+						<li>
+							<a href="{{ url_for('login') }}" class="btn btn-outline-success my-2 my-sm-0">Log In</a>
+						</li>
+                    {% endif %}
+                </ul>
+
+				<!--<a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-success my-2 my-sm-0">Log In</a>-->
+			</div>
+		</nav>
+		<!--End of Navbar-->
+		<div class = "col">
+			<div class = "row justify-content-center ">
+				<h2 style = "">Welcome to (yo)UB Sustainable!</h2>
+			</div>
+				<div class = "row">
+					<!--left column-->
+					<div class="col-md-6 col-lg-6">
+					<!--Mission Statement-->
+						<div class = "col">
+							<div class = "row justify-content-center">
+								<h3 style = "color: black">Our Mission Statement</h3>
+							</div>
+							<div class = "col">
+								<div class = "row">
+									<div class = "col">
+										<p><img src = "static/logo.png" style = "float: right; width: 250px; height:250px;">With the future of irreversible, world-wide climate change approaching in the current state of the world, everyone has a responsibility to do their part to be more sustainable. However, trying to commit to this can be less than optimal without the know how, the tools or the motivation to accomplish this.
+										<br>
+										That’s where (yo)UB Sustainable comes in! By “gamifying” how an individual can accomplish sustainability in a way that’s fun and realistic for them, we transform sustainability from a chore into a challenge with rewards.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					<!--right column-->
+					<div class="col-md-6 col-lg-6">
+					<!--Buttons-->
+						<div class = "col justify-content-center">
+							<div class = "row justify-content-center">
+								<h3 style = "color: black">Check Out...</h3>
+							</div>
+							<table class = "mx-auto">
+								<tr>
+									<a href="{{ url_for('chall') }}" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Sustainability Challenges</a>
+								</tr>
+								<tr>
+									<a href="{{ url_for('rand_chall') }}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">A Random Challenge</a>
+								</tr>
+								<tr>
+									<a href="{{ url_for('dash') }}" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Your Dashboard</a>
+								</tr>
+								<tr>
+									<a href="{{ url_for('friend') }}" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Your Friends' Progress</a>
+								</tr>
+
+							</table>
+						</div>
+
+					</div>
+				</div>
+
+				<div class = "row justify-content-center">
+					<iframe width="700" height="564" src="https://www.youtube.com/embed/EAmmUIEsN9A"></iframe>
+				</div>
+
+				<!--Footer-->
+				<hr>
+				<footer>
+				<div class = "row justify-content-center">
+					<h3 style = "color:black" >We're a team of 5 friends into that sustainability shizz!<h3>
+				</div>
+				<div class = "row justify-content-center">
+					<ul class="list-group list-group-horizontal">
+						<li class="list-group-item">
+							<a href = "https://www.linkedin.com/in/urjitha/">
+								Urjitha
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href = "https://linkedin.com/in/victoriafaltisco/">
+								Victoria
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href = "https://www.linkedin.com/in/lisa-kanbur/">
+								Lisa
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href = "https://www.linkedin.com/in/john-ferenczy/">
+								John
+							</a>
+						</li>
+						<li class="list-group-item">
+							<a href = "https://www.linkedin.com/in/benny-loo/">
+								Benny
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class = "row">
+					<div class = "col-11">
+						@Copyright yo-UB_Sustainable Team
+					</div>
+					<div class = "col-1 justify-content-end">
+						<a href = "https://github.com/UB-CSE/course-project-yo-ub_sustainable">
+							<img src = "static/githublogo.svg" style = "width: 35px">
+						</a>
+					</div>
+				</div>
+				</footer>
+		</div>
+
+	</body>
+</html>

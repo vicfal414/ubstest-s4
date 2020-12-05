@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <!-- import font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <title>Challenge Page 2</title>
+  </head>
+  <body>
+	<!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #86E49E;">
+    <a class="navbar-brand" href="{{ url_for('home') }}"><img src = "static/logo.png" class="img-fluid" width="30" height="30" alt="">(Yo)UB Sustainable</a>	
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('chall') }}">Challenges<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('friend') }}">Friends</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('dash') }}">Dashboard</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if session['logged_in'] == True %}
+          <li>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+          </li>
+                  {% else %}
+          <li>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-success my-2 my-sm-0">Log In</a>
+          </li>
+                  {% endif %}
+              </ul>
+    </div>
+  </nav>	
+  <!--end of Navbar-->
+	
+    <!-- PAGE HEADER SECTION CHALLENGE NAME-->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <h1>Appliances</h1>
+        </div> 
+      </div>
+      <div class="row greenback">
+        <h4>
+        </h4>
+      </div> 
+      <div class="row greenback">
+        <h4>
+        </h4>
+      </div>
+    </div>
+      <br>
+    
+    <!-- SHORT DESCRIPTION -->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <p> By now, most of us have heard of “energy vampires” — those appliances and electronics that draw small amounts of power 24/7, even when we’re not using them. Unplugging some of these devices can be a piece of cake, whereas others can be a bit more of a hassle. So is it worth the trouble? </p>
+          <div class-"row">
+            <!-- first tag - time! -->
+            <div class="col-3 ctsize">
+              <a href="#" class="btn btn-secondary btnbtm">DAILY</a>
+            </div>
+            <!-- second tag - Category -->
+            <div class="col-3 ctsize">
+              <a href="#" class="btn btn-secondary btnbtm">Category</a>
+            </div>
+          </div>
+        </div> 
+        <div class="col-4">
+          <img src ="https://upload.wikimedia.org/wikipedia/commons/0/02/Illuminated_light_switch.jpg" class="pfp img-thumbnail">
+        </div>
+      </div>
+      <div class="row greenback">
+        <h4>
+        </h4>
+      </div> 
+    </div>
+      <br>  
+
+    <!-- The Impact Section-->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <h5>The Impact</h5>
+          <p>The energy costs of plugged-in appliances can really add up, and unplugging these devices could save your up to $100 to $200 a year. Another benefit of unplugging your appliances is protection from power surges.Today’s modern homes are packed with electronic devices and electrical appliances. If you consider the host of small appliances sitting on the typical kitchen counter, the numerous electronics in most entertainment centers and the collection of small chargers it takes to power mobile devices for an entire household, you might count more than 20 plugs before you even get to the major appliances.
+            So while energy vampires do consume small amounts of electricity, a whole house full of them can add up to a noticeable amount on your monthly electric bill. How much money can you save when you unplug appliances? The Department of Energy’s Lawrence Berkeley National Laboratory estimates that an appliance that constantly draws one watt of electricity can cost up to $1 per year, and since many energy vampires use more electricity than that, annual costs can add up to $100 to $200 in the average home. That’s comparable to an entire month’s bill in some households.</p>    
+        </div> 
+      </div>
+    </div>
+      <br>
+    
+    <!-- Helpful Suggestions Section-->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <h5>Helpful Suggestions</h5>
+          <p>- Switch off appliances after use!</p> 
+          <p>- Turn off lights as you leave spaces</p>
+          <p>- Try to use sunlight when possible</p>   
+        </div> 
+      </div>
+        <br>
+      <div class = "row">
+        <a href="#" class="btn btn-secondary col-12">SELECT</a>
+      </div>
+    </div>
+      <br>
+
+      
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
