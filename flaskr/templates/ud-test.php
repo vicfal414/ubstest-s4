@@ -67,9 +67,6 @@
   $rowS = $saved->fetch_assoc();
   $s = $rowS["saved"];
   $sList = explode('|', $s);
-  // foreach ($sList as $i => $sitem){
-  //   echo $sitem;
-  // }
 
   // PROGRESS CHALLENGES
   $progressQ = "SELECT progress FROM dash WHERE user='vic'";
@@ -77,9 +74,6 @@
   $rowP = $progress->fetch_assoc();
   $p = $rowP["progress"];
   $pList = explode('|', $p);
-  // foreach ($pList as $i => $pitem){
-  //   echo $pitem;
-  // }
 
   // COMPLETED CHALLENGES
   $completedQ = "SELECT completed FROM dash WHERE user='vic'";
@@ -87,10 +81,6 @@
   $rowC = $completed->fetch_assoc();
   $c = $rowC["completed"];
   $cList = explode('|', $c);
-  // foreach ($cList as $i => $citem){
-  //   echo $citem;
-  // }
-
   ?>
 
   {% if session['logged_in'] == True %}
