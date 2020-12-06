@@ -98,7 +98,7 @@ def create_app(test_config=None):
     #Addition for new Custom Challenge specific page
     @app.route("/challengeCustom")
     def chall_pg8():
-        return render_template("new_custom_challenge.html")
+        return render_template("new_custom_challenge.html", newCC = newChallenge)
 
     @app.route("/friends")
     def friend():  
@@ -217,7 +217,7 @@ def create_app(test_config=None):
             #Form is empty
             msg = 'Please enter all informaton for Custom Challenge.'
         
-        return render_template("challenge_pages/custom_challenge.html", msg = msg, newCC = newChallenge)
+        return render_template("challenge_pages/custom_challenge.html", msg = msg)
 
     @app.route("/css")
     def css():

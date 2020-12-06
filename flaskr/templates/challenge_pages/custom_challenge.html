@@ -115,8 +115,9 @@
     <div class="col-10">
       <!--<button type="submit" class="btn btn-primary">Submit</button>-->
       <div class="msg">{{ msg }}</div>
-      <input type="submit" value="Submit">
-      <p></p><a href="{{ url_for('chall_pg8') }}">View your custom challenge!</a></p>
+      <!--<input type="submit" value="Submit">
+      <p><a href="{{ url_for('chall_pg8') }}">View your custom challenge!</a></p>-->
+      <p><a href="{ url_for('chall_pg8') }}" class="btn btn-info" role="button">Link Button</a></p>
       <!-- edit for redirect in sprint 4 to new html page for this custom challenge -->
       <!--<button type="submit" value="Submit" href="{{ url_for('chall_pg8') }}">-->
     </div>
