@@ -214,10 +214,10 @@ def create_app(test_config=None):
         def dash():
             if session['logged_in'] == True:
                 connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                user='b2cb10b2b21b72',
-                password='1b8b9cc5',
-                db='heroku_318469e412eb0ae',
-                charset='utf8mb4',
+                    user='b2cb10b2b21b72',
+                    password='1b8b9cc5',
+                    db='heroku_318469e412eb0ae',
+                    charset='utf8mb4',
                 cursorclass=pymysql.cursors.DictCursor)
                 with connection.cursor() as cursor:
                     cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
