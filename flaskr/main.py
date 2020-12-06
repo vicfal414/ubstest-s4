@@ -175,9 +175,6 @@ def create_app(test_config=None):
                 if "picture" in data.keys():
                     session['pro_pic'] = data['picture']
                 flash('You are logged in')
-                # print(data['picture'])
-                return redirect(url_for('home'))
-                
                 resp = make_response(redirect(url_for('home')))
                 resp.set_cookie('username', data['username'])
                 resp.set_cookie('fname', data['fname'])
@@ -198,10 +195,6 @@ def create_app(test_config=None):
         session.pop('logged_in', None)
         session.pop('id', None)
         session.pop('username', None)
-        # session.pop('pro_pic', None)
-        # session.pop('fname', None)
-        # session.pop('lname', None)
-        # session.pop('email', None)
         
         resp = make_response(redirect(url_for('home')))
         
