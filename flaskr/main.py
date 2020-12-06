@@ -111,12 +111,12 @@ def create_app(test_config=None):
             username = request.form['username']
             password = request.form['password']
             # cur = mysql.connection.cursor()
-            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b2cb10b2b21b72',
-                             password='1b8b9cc5',
-                             db='heroku_318469e412eb0ae',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
+            connection = pymysql.connect(host='localhost',
+                         user='root',
+                         password='',
+                         db='test2',
+                         charset='utf8mb4',
+                         cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
                 cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password, ))
             data = cursor.fetchone()
@@ -212,7 +212,6 @@ def create_app(test_config=None):
 
     @app.route("/dash")
     def dash():
-        userChallenges - {}
         connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
                          user='b2cb10b2b21b72',
                          password='1b8b9cc5',
@@ -220,16 +219,16 @@ def create_app(test_config=None):
                          charset='utf8mb4',
                          cursorclass=pymysql.cursors.DictCursor)
         with connection.cursor() as cursor:
-            cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session.username))
+            cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
         challs = cursor.fetchone()
         # print(data)
         if challs:
             sav = challs['saved'].split("|")
             pro = challs['progress'].split("|")
             com = challs['completed'].split("|")
-            userChallenges['saved'] = sav
-            userChallenges['progress'] = pro
-            userChallenges['completed'] = com
+            session['saved'] = sav
+            session['progress'] = pro
+            session['completed'] = com
         return render_template("userdashboard.html")
 
     @app.route("/addFriend", methods = ['POST'])
