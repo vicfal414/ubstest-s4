@@ -217,7 +217,8 @@ def create_app(test_config=None):
             #Form is empty
             msg = 'Please enter all informaton for Custom Challenge.'
         
-        return render_template("challenge_pages/custom_challenge.html", msg = msg)
+        #return render_template("challenge_pages/custom_challenge.html", msg = msg)
+        return redirect(url_for('chall_pg8'))
 
     @app.route("/css")
     def css():
