@@ -51,8 +51,9 @@
     </div>
   </nav>
   <!--end of Navbar-->
-
-  {% if session.logged_in == True %}
+{% if session.logged_in == True %}
+  <h2>Please log in to view your dashboard!</h2>
+  {% else %}
   <div class="container">
     <div class="container">
       <div class="row">
@@ -140,8 +141,6 @@
       <a href="#" class="btn btn-secondary col-12">Sign Out</a>
     </div>
   </div>
-  {% else %}
-  <h2>Please log in to view your dashboard!</h2>
   {% endif %}
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
