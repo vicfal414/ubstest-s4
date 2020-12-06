@@ -18,29 +18,29 @@
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-   		<script> (function (d, w, c) {
-				if(!d.getElementById("spd-busns-spt")) {
-					var n = d.getElementsByTagName('script')[0], s = d.createElement('script');
-					var loaded = false;
+   		<script> (function (d, w, c) { 
+				if(!d.getElementById("spd-busns-spt")) { 
+					var n = d.getElementsByTagName('script')[0], s = d.createElement('script'); 
+					var loaded = false; 
 					s.id = "spd-busns-spt";
-					s.async = "async";
-					s.setAttribute("data-self-init", "false");
-					s.setAttribute("data-init-type", "opt");
-					s.src = 'https://cdn.freshbots.ai/assets/share/js/freshbots.min.js';
-					s.setAttribute("data-client", "e1ece71687763b61981531a615fe82871bddfc90");
-					s.setAttribute("data-bot-hash", "53be4acd893ef7f23cb16f1de3146f7b1624b950");
-					s.setAttribute("data-env", "prod"); s.setAttribute("data-region", "us");
-					if (c) {
-						s.onreadystatechange = s.onload = function () {if (!loaded) { c(); } loaded = true; };
-					}
-					n.parentNode.insertBefore(s, n);
-				}
-			})
-			(document, window, function () {
-				Freshbots.initiateWidget({ autoInitChat: false, getClientParams: function () { return ; }}, function(successResponse) { }, function(errorResponse) { });
-			});
+					s.async = "async"; 
+					s.setAttribute("data-self-init", "false"); 
+					s.setAttribute("data-init-type", "opt"); 
+					s.src = 'https://cdn.freshbots.ai/assets/share/js/freshbots.min.js'; 
+					s.setAttribute("data-client", "e1ece71687763b61981531a615fe82871bddfc90"); 
+					s.setAttribute("data-bot-hash", "53be4acd893ef7f23cb16f1de3146f7b1624b950"); 
+					s.setAttribute("data-env", "prod"); s.setAttribute("data-region", "us"); 
+					if (c) { 
+						s.onreadystatechange = s.onload = function () {if (!loaded) { c(); } loaded = true; }; 
+					} 
+					n.parentNode.insertBefore(s, n); 
+				} 
+			}) 
+			(document, window, function () { 
+				Freshbots.initiateWidget({ autoInitChat: false, getClientParams: function () { return ; }}, function(successResponse) { }, function(errorResponse) { }); 
+			}); 
 		</script>
-
+    
 		<title>Homepage</title>
 	</head>
 	<body>
@@ -67,7 +67,6 @@
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					{% if session['logged_in'] == True %}
-					<p>Hello {{session.username}}!</p>
 						<li>
 							<a href="{{ url_for('logout') }}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
 						</li>
@@ -77,14 +76,13 @@
 						</li>
                     {% endif %}
                 </ul>
-
-				<!--<a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-success my-2 my-sm-0">Log In</a>-->
+				
 			</div>
 		</nav>
 		<!--End of Navbar-->
 		<div class = "col">
 			<div class = "row justify-content-center ">
-				<h2 style = "">Welcome to (yo)UB Sustainable!</h2>
+				<h2 style = "">Welcome {% if not request.cookies.get('fname') %}to (yo)UB Sustainable{% else %}back, {{ request.cookies.get('fname') }}{% endif %}!</h2> 
 			</div>
 				<div class = "row">
 					<!--left column-->
@@ -104,41 +102,64 @@
 								</div>
 							</div>
 						</div>
-
-					</div>
-
+						
+					</div>	
+					
 					<!--right column-->
 					<div class="col-md-6 col-lg-6">
-					<!--Buttons-->
+
 						<div class = "col justify-content-center">
-							<div class = "row justify-content-center">
-								<h3 style = "color: black">Check Out...</h3>
-							</div>
-							<table class = "mx-auto">
-								<tr>
-									<a href="{{ url_for('chall') }}" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Sustainability Challenges</a>
-								</tr>
-								<tr>
-									<a href="{{ url_for('rand_chall') }}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">A Random Challenge</a>
-								</tr>
-								<tr>
-									<a href="{{ url_for('dash') }}" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Your Dashboard</a>
-								</tr>
-								<tr>
-									<a href="{{ url_for('friend') }}" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Your Friends' Progress</a>
-								</tr>
-
-							</table>
+							{% if session['logged_in'] == True %}
+								<!--Buttons-->
+								<div class = "row justify-content-center">
+									<h3 style = "color: black">Check Out...</h3>
+								</div>
+								<table class = "mx-auto">
+									<tr>
+										<a href="{{ url_for('chall') }}" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Sustainability Challenges</a>
+									</tr>
+									<tr>
+										<a href="{{ url_for('rand_chall') }}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">A Random Challenge</a>
+									</tr>
+									<tr>
+										<a href="{{ url_for('dash') }}" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Your Dashboard</a>
+									</tr>
+									<tr>
+										<a href="{{ url_for('friend') }}" class="btn btn-secondary btn-lg btn-block" role="button" aria-pressed="true">Your Friends' Progress</a>
+									</tr>
+								</table>
+							{% else %}
+							<!--Login-->
+								<div class="card text-center bg-secondary">
+									<div class="card-header">
+										<h3>LOG IN FOR SITE ACCESS</h3>
+									</div>
+									<div class="card-body justify-content-center">
+									<form action="{{ url_for('login') }}" method="post">
+										<label for="username">Username: </label><br>
+										<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}"><br>
+										<label for="password">Password:</label><br>
+										<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}"><br>
+										<input class="btn btn-primary" type="submit" value="Log In">
+									</form>
+									{% if error %}
+										<p class="error"><strong>Error:</strong> {{ error }}
+									{% endif %}
+									</div>
+									<div>
+										<a href="{{ url_for('signup') }}">Register for an Account</a>
+									</div>
+								</div>
+							{% endif %}
 						</div>
-
 					</div>
 				</div>
-
+				
 				<div class = "row justify-content-center">
 					<iframe width="700" height="564" src="https://www.youtube.com/embed/EAmmUIEsN9A"></iframe>
 				</div>
-
-				<!--Footer-->
+				
+				<!--Footer-->	
 				<hr>
 				<footer>
 				<div class = "row justify-content-center">
@@ -173,7 +194,7 @@
 						</li>
 					</ul>
 				</div>
-
+				
 				<div class = "row">
 					<div class = "col-11">
 						@Copyright yo-UB_Sustainable Team
@@ -186,6 +207,6 @@
 				</div>
 				</footer>
 		</div>
-
+		
 	</body>
 </html>
