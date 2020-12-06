@@ -28,10 +28,10 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         MYSQL_DATABASE_HOST='us-cdbr-east-02.cleardb.com',
-        MYSQL_PORT=15551,
-        MYSQL_DATABSE_USER='b33b6415873ff5',
-        MYSQL_DATABASE_PASSWORD='d1a1b9a1',
-        MYSQL_DATABASE_DB='heroku_1e2700f5b989c0b'
+        MYSQL_PORT=3306,
+        MYSQL_DATABSE_USER='b2cb10b2b21b72',
+        MYSQL_DATABASE_PASSWORD='1b8b9cc5',
+        MYSQL_DATABASE_DB='heroku_318469e412eb0ae'
     )
 
     # login = LoginManager(app)
@@ -62,39 +62,6 @@ def create_app(test_config=None):
         else:
             msg = 'Please login to access user-only content'
             return render_template("login.html", error = msg)
-
-
-    def picture(user, email):
-        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM accounts WHERE username = %s AND email = %s', (user, email, ))
-        data = cursor.fetchone() 
-        if data:
-            picture = data['picture']
-            return picture
-        else:
-            return "No image"
-
-    # @app.route("/dash/<username>")
-    # @login_required
-    # def user(username):
-    #     connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-    #                     user='b33b6415873ff5',
-    #                     password='d1a1b9a1',
-    #                     db='heroku_1e2700f5b989c0b',
-    #                     charset='utf8mb4',
-    #                     cursorclass=pymysql.cursors.DictCursor)
-    #     with connection.cursor() as cursor:
-    #             cursor.execute('SELECT * FROM accounts WHERE username = %s', (username, ))
-    #     data = cursor.fetchone()
-    #     user = data['username']
-    #     return user
-        
 
     @app.route("/challenge")
     def chall():
@@ -156,9 +123,9 @@ def create_app(test_config=None):
             password = request.form['password']
             # cur = mysql.connection.cursor()
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
@@ -214,13 +181,13 @@ def create_app(test_config=None):
             email = request.form['email']
             fname = request.form['fname']
             lname = request.form['lname']
-            connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b33b6415873ff5',
-                    password='d1a1b9a1',
-                    db='heroku_1e2700f5b989c0b',
-                    charset='utf8mb4',
-                    cursorclass=pymysql.cursors.DictCursor)
-            with connection2.cursor() as cursor2:
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+            with connection.cursor() as cursor2:
                 cursor2.execute('SELECT * FROM accounts WHERE username = %s', (username,))
             data = cursor2.fetchone()
             if data:
@@ -239,11 +206,11 @@ def create_app(test_config=None):
                 hash_str = md5(email.encode('utf-8')).hexdigest()
                 complete_hash = ('https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(hash_str, 128))
                 session['pro_pic'] = complete_hash
-                with connection2.cursor() as cursor3:
+                with connection.cursor() as cursor3:
                     cursor3.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s, %s, %s)', (fname, lname, username, password, email, complete_hash))
                     cursor3.execute('INSERT INTO dashboard VALUES (%s, NULL, NULL, NULL)', (username))
 
-                connection2.commit()
+                connection.commit()
                 msg = 'You have successfully registered!'
                 session['username'] = username
                 session['fname'] = fname
@@ -251,7 +218,7 @@ def create_app(test_config=None):
                 session['email'] = email
                 # msg = complete_hash
                 # print(complete_hash)
-            connection2.close()
+            connection.close()
         elif request.method == 'POST':
             #Form is empty
             msg = 'Please enter your information.'
