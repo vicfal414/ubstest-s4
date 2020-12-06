@@ -56,10 +56,6 @@ def create_app(test_config=None):
     def home():
         return render_template("index.html")
 
-    @app.route("/dash")
-    def dash():
-        return render_template("ud-test.php")
-
     @app.route("/challenge")
     def chall():
         return render_template("challenge_list.html")
@@ -156,12 +152,12 @@ def create_app(test_config=None):
             email = request.form['email']
             fname = request.form['fname']
             lname = request.form['lname']
-            connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b2cb10b2b21b72',
-                    password='1b8b9cc5',
-                    db='heroku_318469e412eb0ae',
-                    charset='utf8mb4',
-                    cursorclass=pymysql.cursors.DictCursor)
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
                 cursor2.execute('SELECT * FROM accounts WHERE username = %s', (username,))
             data = cursor2.fetchone()
@@ -213,6 +209,27 @@ def create_app(test_config=None):
                 if user['name'] == name:
                     return user['profilePic']
         return None
+
+    @app.route("/dash")
+    def dash():
+        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
+        challs = cursor.fetchone()
+        # print(data)
+        if challs:
+            sav = challs['saved'].split("|")
+            pro = challs['progress'].split("|")
+            com = challs['completed'].split("|")
+            session['saved'] = sav
+            session['progress'] = pro
+            session['completed'] = com
+        return render_template("userdashboard.html")
 
     @app.route("/addFriend", methods = ['POST'])
     def addFriend():
