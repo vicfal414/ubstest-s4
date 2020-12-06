@@ -212,23 +212,23 @@ def create_app(test_config=None):
 
     @app.route("/dash")
     def dash():
-        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+        if session['logged_in'] == True:
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
                              user='b2cb10b2b21b72',
                              password='1b8b9cc5',
                              db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
-        challs = cursor.fetchone()
-        # print(data)
-        if challs:
-            sav = challs['saved'].split("|")
-            pro = challs['progress'].split("|")
-            com = challs['completed'].split("|")
-            session['saved'] = sav
-            session['progress'] = pro
-            session['completed'] = com
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
+            challs = cursor.fetchone()
+            if challs:
+                sav = challs['saved'].split("|")
+                pro = challs['progress'].split("|")
+                com = challs['completed'].split("|")
+                session['saved'] = sav
+                session['progress'] = pro
+                session['completed'] = com
         return render_template("userdashboard.html")
 
     @app.route("/addFriend", methods = ['POST'])
