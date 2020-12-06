@@ -12,12 +12,12 @@
     <!-- import font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     
-    <title>Add Custom Challenge Page </title>
+    <title>New Custom Challenge Page 1</title>
   </head>
   <body>
 	<!--Navbar-->
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #86E49E;">
-    <a class="navbar-brand" href="{{ url_for('home') }}"><img src="https://via.placeholder.com/50" width="30" height="30" alt="">(Yo)UB Sustainable</a>	
+    <a class="navbar-brand" href="{{ url_for('home') }}"><img src = "static/logo.png" class="img-fluid" width="30" height="30" alt="">(Yo)UB Sustainable</a>	
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,7 +27,7 @@
           <a class="nav-link" href="{{ url_for('home') }}">Home</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Challenges<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{{ url_for('chall') }}">Challenges<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('friend') }}">Friends</a>
@@ -51,77 +51,96 @@
   </nav>	
   <!--end of Navbar--> 
 
-  <h3></h3>
+ <!-- Start of PHP -->
   
-  <!-- FORM-->
-  <form action="{{ url_for('addingcustom') }}", method='post'>
-    <!--Challenge Name-->
-    <div class="form-group">
-      <div class="col-10">
-        <label for="ChallengeName"><h5>Challenge Name</h5></label>
-        <input type="text" id="challengeName">
-      </div>
-    </div>
+  <!-- End of PHP -->
 
-    <!--Challenge Description-->
-    <div class="form-group">
-      <div class="col-10">
-        <label for="Description"><h5>Short Description</h5></label>
-        <input type="text" id="shortDescription">
+    <!-- PAGE HEADER SECTION CHALLENGE NAME-->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <!--<h1><?php echo post-> name; ?></h1>-->
+          <h1>{{ newCC["name"] }}</h1>
+        </div> 
+      </div>
+      <div class="row greenback">
+        <h4>
+        </h4>
+      </div> 
+      <div class="row greenback">
+        <h4>
+        </h4>
       </div>
     </div>
+      <br>
     
-    <!--Duration of Challenge-->
-    <div class="form-group">
-      <div class="col-10">
-        <label for="exampleFormControlSelect1"><h5> Duration of Challenge</h5></label>
-        <select class="form-control" id="SelectDuration">
-          <option>Daily</option>
-          <option>Weekly</option>
-          <option>Monthly</option>
-        </select>
+    <!-- SHORT DESCRIPTION -->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>  
+        <div class="col-6">
+          <!-- <p> <?php echo post->decription; ?> </p> -->
+          <p> {{ newCC["description"] }} </p>
+          <div class-"row">
+            <!-- first tag - time! -->
+            <div class="col-3 ctsize">
+              <a href="#" class="btn btn-secondary btnbtm">{{ newCC["duration"] }}</a>
+            </div>
+            <!-- second tag - Category -->
+            <div class="col-3 ctsize">
+              <a href="#" class="btn btn-secondary btnbtm">{{ newCC["category"] }}</a>
+            </div>
+          </div>
+        </div> 
+        <!--<div class="col-4">
+          <img src ="https://upload.wikimedia.org/wikipedia/commons/2/20/Drinking_straws_2_2018-10-16.jpg" class="img-thumbnail">
+        </div>-->
       </div>
+      <div class="row greenback">
+        <h4>
+        </h4>
+      </div> 
     </div>
+      <br>  
 
-    <!--Category of Challenge-->
-    <div class="form-group">
-      <div class="col-10">
-        <label for="exampleFormControlSelect1"><h5>Select Category of Challenge</h5></label>
-        <select class="form-control" id="SelectCategory">
-          <option>Category 1</option>
-          <option>Category 2</option>
-          <option>Category 3</option>
-        </select>
+    <!-- The Impact Section-->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <h5>The Impact</h5>
+          <!--<p><?php echo post-> impact; ?></p>  -->
+          <p>{{ newCC["impact"] }}  </p>
+        </div> 
       </div>
     </div>
-
-    <!--Challenge Impacts-->
-    <div class="form-group">
-      <div class="col-10">
-        <label for="Description"><h5>The Impact</h5></label>
-        <input type="text" id="theImpact">
-      </div>
-    </div>
-
-    <!--Challenge Suggestions-->
-    <div class="col-10">
-      <div class="form-group">
-        <label for="Description"><h5>Helpful Suggestions</h5></label>
-        <input type="text" id="Suggestions" aria-describedby="suggestionsHelp">
-        <small id="sugegstionsHelp" class="form-text text-muted">Please make them short bullet points(-) :)</small>
-      </div>
-    </div>
+      <br>
     
-    <div class="col-10">
-      <!--<button type="submit" class="btn btn-primary">Submit</button>-->
-      <div class="msg">{{ msg }}</div>
-      <input type="submit" value="Submit">
-      <p></p><a href="{{ url_for('chall_pg8') }}">View your custom challenge!</a></p>
-      <!-- edit for redirect in sprint 4 to new html page for this custom challenge -->
-      <!--<button type="submit" value="Submit" href="{{ url_for('chall_pg8') }}">-->
+    <!-- Helpful Suggestions Section-->
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <h5>Helpful Suggestions</h5>
+          <!--<p><?php echo post-> suggestions; ?></p> -->
+          <p>{{ newCC["suggestions"] }}</p>
+          <!--<p>- You can buy large packs online!</p>
+          <p>- Simple chage in your lifestlye, one in your bag and one at home.</p>  --> 
+        </div> 
+      </div>
+        <br>
+      <!--<div class = "row">
+        <a href="#" class="btn btn-secondary col-12">SELECT</a>
+      </div> -->
     </div>
-  </form>
-  <br>
+      <br>
+
+      
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
