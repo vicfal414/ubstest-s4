@@ -12,7 +12,7 @@
     <!-- import font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     
-    <title>Challenge Page 5</title>
+    <title>Add Custom Challenge Page </title>
   </head>
   <body>
 	<!--Navbar-->
@@ -54,7 +54,7 @@
   <h3></h3>
   
   <!-- FORM-->
-  <form>
+  <form action="{{ url_for('addingcustom') }}", method='post'>
     <!--Challenge Name-->
     <div class="form-group">
       <div class="col-10">
@@ -113,7 +113,12 @@
     </div>
     
     <div class="col-10">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <!--<button type="submit" class="btn btn-primary">Submit</button>-->
+      <div class="msg">{{ msg }}</div>
+      <input type="submit" value="Submit">
+      <p></p><a href="{{ url_for('chall_pg8') }}">View your custom challenge!</a></p>
+      <!-- edit for redirect in sprint 4 to new html page for this custom challenge -->
+      <!--<button type="submit" value="Submit" href="{{ url_for('chall_pg8') }}">-->
     </div>
   </form>
   <br>
