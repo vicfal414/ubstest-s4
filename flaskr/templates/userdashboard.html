@@ -63,11 +63,11 @@
           <p> Eco Superstar</p>
           <div class="row">
             <div class="col">
-              <h2>4</h2>
+              <h2>{{len(userChallenges['completed'])}}</h2>
               <p>completed</p>
             </div>
             <div class="col">
-              <h2>3</h2>
+              <h2>{{len(userChallenges['progress'])}}</h2>
               <p>in progress</p>
             </div>
           </div>
@@ -88,33 +88,16 @@
       </div>
       <div class="row greenborder">
         <!-- challenge progress bar -->
+        {% for challenge in userChallenges['progress'] %}
         <div class="col-4">
-          <p>Challenge Title</p>
+          <p>{{challenge}}</p>
         </div>
         <div class="col-8">
           <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
           </div>
         </div>
-        <!-- end of progress bar -->
-        <div class="col-4">
-          <p>Challenge Title</p>
-        </div>
-        <div class="col-8">
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 64%"></div>
-          </div>
-        </div>
-        <!-- end of challenge 2 -->
-        <div class="col-4">
-          <p>Challenge Title</p>
-        </div>
-        <div class="col-8">
-          <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 15%"></div>
-          </div>
-        </div>
-        <!-- end of challenge 3 -->
+        {% endfor %}
       </div>
     </div>
     <br>
