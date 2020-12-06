@@ -212,7 +212,7 @@ def create_app(test_config=None):
 
     @app.route("/dash")
     def dash():
-         connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
                              user='b2cb10b2b21b72',
                              password='1b8b9cc5',
                              db='heroku_318469e412eb0ae',
