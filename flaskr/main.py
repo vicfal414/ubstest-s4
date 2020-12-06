@@ -96,7 +96,7 @@ def create_app(test_config=None):
         return render_template("challenge_pages/custom_challenge.html")
 
     #Addition for new Custom Challenge specific page
-    @app.route("/challengeCustom")
+    @app.route("/newChallengeCustom")
     def chall_pg8():
         return render_template("new_custom_challenge.html", newCC = newChallenge)
 
