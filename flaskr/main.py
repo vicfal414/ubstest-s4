@@ -229,9 +229,7 @@ def create_app(test_config=None):
                 session['saved'] = sav
                 session['progress'] = pro
                 session['completed'] = com
-            return render_template("userdashboard.html")
-        else:
-            return render_template("dashnotlogin.html")
+         return render_template("userdashboard.html")
 
     @app.route("/addFriend", methods = ['POST'])
     def addFriend():
