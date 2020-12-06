@@ -117,9 +117,9 @@ def create_app(test_config=None):
             password = request.form['password']
             # cur = mysql.connection.cursor()
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
@@ -156,11 +156,11 @@ def create_app(test_config=None):
             fname = request.form['fname']
             lname = request.form['lname']
             connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b33b6415873ff5',
-                    password='d1a1b9a1',
-                    db='heroku_1e2700f5b989c0b',
-                    charset='utf8mb4',
-                    cursorclass=pymysql.cursors.DictCursor)
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
                 cursor2.execute('SELECT * FROM accounts WHERE username = %s', (username,))
             data = cursor2.fetchone()
@@ -200,11 +200,11 @@ def create_app(test_config=None):
             theImpact = request.form['theImpact']
             sugegstionsHelp = request.form['sugegstionsHelp']
             connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b33b6415873ff5',
-                    password='d1a1b9a1',
-                    db='heroku_1e2700f5b989c0b',
-                    charset='utf8mb4',
-                    cursorclass=pymysql.cursors.DictCursor)
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor3:
                 cursor3.execute("UPDATE challenges SET 
                         name = challengeName,
@@ -249,12 +249,12 @@ def create_app(test_config=None):
      @app.route("/dash")
      def dash():
           if session['logged_in'] == True:
-              connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                  user='b2cb10b2b21b72',
-                  password='1b8b9cc5',
-                  db='heroku_318469e412eb0ae',
-                  charset='utf8mb4',
-             cursorclass=pymysql.cursors.DictCursor)
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
              with connection.cursor() as cursor:
                     cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
              challs = cursor.fetchone()
