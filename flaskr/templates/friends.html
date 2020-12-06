@@ -1,170 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- import font -->
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
 
-		<!--This will need to be changed to a var-->
-		<title>Friends Page</title>
-	</head>
+	<!-- import font -->
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
 
-	<body>
-		<!--Navbar-->
-		<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #86E49E;">
-			<a class="navbar-brand" href="{{ url_for('home') }}"><img src = "static/logo.png" width="30" height="30" alt="">(Yo)UB Sustainable</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('home') }}">Home</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('chall') }}">Challenges</a>
-					</li>
-					<!--This will need to be changed to a var-->
-					<li class="nav-item active">
-						<a class="nav-link" href="#">Friends<span class="sr-only">(current)</span></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('dash') }}">Dashboard</a>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					{% if session['logged_in'] == True %}
-					<p>Hello {{session.username}}!</p>
-						<li>
-							<a href="{{ url_for('logout') }}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
-						</li>
-					{% else %}
-						<li>
-							<a href="{{ url_for('login') }}" class="btn btn-outline-success my-2 my-sm-0">Log In</a>
-						</li>
-					{% endif %}
-				</ul>
-			</div>
-		</nav>
-		<!--end of Navbar-->
+	<!--This will need to be changed to a var-->
+	<title>Friends Page</title>
+</head>
 
+<body>
+	<!--Navbar-->
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #86E49E;">
+		<a class="navbar-brand" href="{{ url_for('home') }}"><img src="static/logo.png" width="30" height="30"
+				alt="">(Yo)UB Sustainable</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('home') }}">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('chall') }}">Challenges</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Friends<span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('dash') }}">Dashboard</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				{% if session['logged_in'] == True %}
+				<li>
+					<a href="{{ url_for('logout') }}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+				</li>
+				{% else %}
+				<li>
+					<a href="{{ url_for('login') }}" class="btn btn-outline-success my-2 my-sm-0">Log In</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
+	<!--end of Navbar-->
+
+	<div class="container">
 		<div class="container">
-			<div class="container">
-				<div class="row">
-					<div class="col-11">
-						<div class = "row">
-							<div class = "col">
-								<h1>Your Friends</h1>
-								<h6>(Click a user's photo to view their profile)</h6>
-								<p>TOTAL FRIENDS: {{ friendList | length }}</p>
-							</div>
-							<div class = "col">
-								<h1>Users You May Know</h1>
-							</div>
+			<div class="row">
+				<div class="col-10">
+					<div class="row">
+						<div class="col">
+							<h1>Your Friends</h1>
+							<h6>(Click a user's photo to view their profile)</h6>
+							<p>TOTAL FRIENDS: {{ session.friends | length }}</p>
 						</div>
-						<div class="row">
-							<!--Friends List-->
-							<div class="col greenborder">
-								{% if friendList | length == 0 %}
-									<p>Add friends to see them here.</p>
-								{% elif friendList | length <= 5 %}
-									{% for friend in friendList%}
-										<table>
-											<tr>
-												<td>
-													<a href="{{ url_for('publicProfileFriend') }}"><img src ="{{ friend['profilePic'] }}" class="pfp img-thumbnail"></a>
-												</td>
-												<td>{{friend['name']}}</td>
-												<td>
-													<form action = "/remFriend" method = "POST">
-														<button name = "friend" type = "submit" value = "{{ friend['name'] }}" class="btn btn-secondary btnbtm">Unfriend</button>
-													</form>
-												</td>
-											</tr>
-										</table>
-									{% endfor %}
-								{% else %}
-									<table>
-									{% for friend in range(5) %}
-										<tr>
-											<td>
-												<a href="{{ url_for('publicProfileFriend') }}"><img src ="{{ friendList[friend]['profilePic'] }}" class="pfp img-thumbnail"></a>
-											</td>
-											<td>{{friendList[friend]['name']}}</td>
-											<td>
-												<form action = "/remFriend" method = "POST">
-													<button name = "friend" type = "submit" value = "{{ friendList[friend]['name'] }}" class="btn btn-secondary btnbtm">Unfriend</button>
-												</form>
-											</td>
-										</tr>
-									{% endfor %}
-										<tr>
-											<td>
-												<button href = "#" class = "btn btn-secondary btnbtm">Load More</button>
-											</td>
-										</tr>
-									</table>
-								{% endif %}
-							</div>
-							<!--Not Friends List-->
-							<div class="col greenborder">
-								<table>
-								{% if notFriendList | length <= 5 %}
-									{% for notFriend in notFriendList%}
-										<tr>
-											<td>
-												<a href="{{ url_for('publicProfileNotFriend') }}"><img src ="{{ notFriend['profilePic'] }}" class="pfp img-thumbnail"></a>
-											</td>
-											<td>{{notFriend['name']}}</td>
-											<td>
-												<form action = "/addFriend" method = "POST">
-													<button name = "notFriend" type = "submit" value = "{{ notFriend['name'] }}" class="btn btn-secondary btnbtm">Add Friend</button>
-												</form>
-											</td>
-										</tr>
-									{% endfor %}
-								{% else %}
-									{% for notFriend in range(5) %}
-										<tr>
-											<td>
-												<a href="{{ url_for('publicProfileNotFriend') }}"><img src ="{{ notFriendList[notFriend]['profilePic'] }}" class="pfp img-thumbnail"></a>
-											</td>
-											<td>{{notFriendList[notFriend]['name']}}</td>
-											<td>
-												<form action = "/addFriend" method = "POST">
-													<button name = "notFriend" type = "submit" value = "{{ notFriendList[notFriend]['name'] }}" class="btn btn-secondary btnbtm">Add Friend</button>
-												</form>
-											</td>
-										</tr>
-									{% endfor %}
-									<tr>
-										<td>
-											<button href = "#" class = "btn btn-secondary btnbtm">Load More</button>
-										</td>
-									</tr>
-								{% endif %}
-								</table>
-							</div>
+						<div class="col">
+							<h1>Other Users on our App</h1>
 						</div>
 					</div>
-					<div class="col-1">
-						<input type="text" placeholder="Search Users...">
+					<div class="row">
+						<!--Friends List-->
+						<div class="col greenborder">
+							{% if session.friends | length == 0 %}
+							<p>Add friends to see them here.</p>
+							{% elif session.friends | length <= 5 %}
+							<table>
+								{% for friend in session.friends %}
+								<tr>
+									<td>
+										<!--this probably needs to be an action since we'll be calling publicProfileFriend from main.py-->
+										<a href="{{ url_for('publicProfileFriend') }}">
+											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (friend)) }}" 
+												class="pfp img-thumbnail">
+										</a>
+									</td>
+									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (friend)) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (friend)) }}</td>
+									<td>
+										<!--TO DO-->
+										<form action="/remFriend" method="POST">
+											<button 
+												name="friend" 
+												type="submit" 
+												value="{{ friend['name'] }}"
+												class="btn btn-secondary btnbtm">Unfriend</button>
+										</form>
+									</td>
+								</tr>
+								{% endfor %}
+							</table>
+							{% elif loadMoreFriend == False %}
+							<table>
+								{% for friend in range(5) %}
+								<tr>
+									<td>
+										<a href="{{ url_for('publicProfileFriend') }}">
+											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (friendList[friend])) }}" 
+												class="pfp img-thumbnail">
+										</a>
+									</td>
+									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (friendList[friend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (friendList[friend])) }}</td>
+									<td>
+										<!--TO DO-->
+										<form action="/remFriend" method="POST">
+											<button 
+												name="friend" 
+												type="submit" 
+												value="{{ friendList[friend]['name'] }}"
+												class="btn btn-secondary btnbtm">Unfriend</button>
+										</form>
+									</td>
+								</tr>
+								{% endfor %}
+								<tr>
+									<td>
+										<form action="/loadMoreFriend" method="POST">
+											<button 
+												name="loadMoreFriend" 
+												type="submit"
+												class="btn btn-secondary btnbtm">Load More</button>
+										</form>
+									</td>
+								</tr>
+							</table>
+							{% else %}
+							<table>
+								{% for friend in range(10) %}
+								<tr>
+									<td>
+										<a href="{{ url_for('publicProfileFriend') }}">
+											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (friendList[friend])) }}"
+											class="pfp img-thumbnail">
+										</a>
+									</td>
+									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (friendList[friend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (friendList[friend])) }}</td>
+									<td>
+										<!--TO DO-->
+										<form action="/remFriend" method="POST">
+											<button 
+												name="friend" 
+												type="submit" 
+												value="{{ friendList[friend]['name'] }}"
+												class="btn btn-secondary btnbtm">Unfriend</button>
+										</form>
+									</td>
+								</tr>
+								{% endfor %}
+							</table>
+							{% endif %}
+						</div>
+						<!--Not Friends List-->
+						<div class="col greenborder">
+							{% if loadMoreNotFriend == False %}
+							<table>
+								{% for notFriend in range(5) %}
+								<tr>
+									<td>
+										<a href="{{ url_for('publicProfileNotFriend') }}">
+											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (notFriendList[notFriend])) }}"
+												class="pfp img-thumbnail">
+										</a>
+									</td>
+									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (notFriendList[notFriend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (notFriendList[notFriend])) }}</td>
+									<td>
+										<!--TO DO-->
+										<form action="/addFriend" method="POST">
+											<button 
+												name="notFriend" 
+												type="submit"
+												value="{{ notFriendList[notFriend]['name'] }}"
+												class="btn btn-secondary btnbtm">Add Friend</button>
+										</form>
+									</td>
+								</tr>
+								{% endfor %}
+								<tr>
+									<td>
+										<form action="/loadMoreNotFriend" method="POST">
+											<button 
+												name="loadMoreNotFriend" 
+												type="submit"
+												class="btn btn-secondary btnbtm">Load More</button>
+										</form>
+									</td>
+								</tr>
+							</table>
+							{% else %}
+							<table>
+								{% for notFriend in range(10) %}
+								<tr>
+									<td>
+										<a href="{{ url_for('publicProfileNotFriend') }}">
+											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (notFriendList[notFriend])) }}"
+												class="pfp img-thumbnail">
+										</a>
+									</td>
+									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (notFriendList[notFriend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (notFriendList[notFriend])) }}</td>
+									<td>
+										<!--TO DO-->
+										<form action="/addFriend" method="POST">
+											<button 
+												name="notFriend" 
+												type="submit"
+												value="{{ notFriendList[notFriend]['name'] }}"
+												class="btn btn-secondary btnbtm">Add Friend</button>
+										</form>
+									</td>
+								</tr>
+								{% endfor %}
+							</table>
+							{% endif %}
+						</div>
 					</div>
+				</div>
+				<div class="col-1">
+					<div class="row">
+						<form action="/search" method="POST">
+							<input 
+								type="text" 
+								placeholder="Search Users..." 
+								name="search" 
+								value="{{  request.form.search }}">
+						</form>
+					</div>
+					<p>{{msg}}</p>
 				</div>
 			</div>
 		</div>
+	</div>
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-	</body>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"></script>
+</body>
+
 </html>
