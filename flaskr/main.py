@@ -56,10 +56,6 @@ def create_app(test_config=None):
     def home():
         return render_template("index.html")
 
-    @app.route("/dash")
-    def dash():
-        return render_template("ud-test.php")
-
     @app.route("/challenge")
     def chall():
         return render_template("challenge_list.html")
@@ -213,6 +209,28 @@ def create_app(test_config=None):
                 if user['name'] == name:
                     return user['profilePic']
         return None
+
+    @app.route("/dash")
+    def dash():
+        userChallenges - {}
+        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                         user='b2cb10b2b21b72',
+                         password='1b8b9cc5',
+                         db='heroku_318469e412eb0ae',
+                         charset='utf8mb4',
+                         cursorclass=pymysql.cursors.DictCursor)
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session.username))
+        challs = cursor.fetchone()
+        # print(data)
+        if challs:
+            sav = challs['saved'].split("|")
+            pro = challs['progress'].split("|")
+            com = challs['completed'].split("|")
+            userChallenges['saved'] = sav
+            userChallenges['progress'] = pro
+            userChallenges['completed'] = com
+        return render_template("userdashboard.html")
 
     @app.route("/addFriend", methods = ['POST'])
     def addFriend():
