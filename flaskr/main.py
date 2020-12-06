@@ -92,9 +92,9 @@ def create_app(test_config=None):
     def friend():
         msg = ''
         connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
         with connection.cursor() as cursor:
@@ -126,9 +126,9 @@ def create_app(test_config=None):
         if request.method == 'POST' and 'search' in request.form:
             search = request.form['search']
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
@@ -148,11 +148,11 @@ def create_app(test_config=None):
         if request.method == 'POST':
             friend = request.form['friend']
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                                user='b33b6415873ff5',
-                                password='d1a1b9a1',
-                                db='heroku_1e2700f5b989c0b',
-                                charset='utf8mb4',
-                                cursorclass=pymysql.cursors.DictCursor)
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
                 cursor.execute('SELECT friendsList FROM accounts WHERE id = %s', (friend))
                 fList = cursor.fetchone()
@@ -174,11 +174,11 @@ def create_app(test_config=None):
         if request.method == 'POST':
             notFriend = request.form['notFriend']
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                                user='b33b6415873ff5',
-                                password='d1a1b9a1',
-                                db='heroku_1e2700f5b989c0b',
-                                charset='utf8mb4',
-                                cursorclass=pymysql.cursors.DictCursor)
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
                 cursor.execute('SELECT friendsList FROM accounts WHERE id = %s', (notFriend))
                 fList = cursor.fetchone()
@@ -203,9 +203,9 @@ def create_app(test_config=None):
             password = request.form['password']
             # cur = mysql.connection.cursor()
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
@@ -241,11 +241,11 @@ def create_app(test_config=None):
             fname = request.form['fname']
             lname = request.form['lname']
             connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b33b6415873ff5',
-                    password='d1a1b9a1',
-                    db='heroku_1e2700f5b989c0b',
-                    charset='utf8mb4',
-                    cursorclass=pymysql.cursors.DictCursor)
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
                 cursor2.execute('SELECT * FROM accounts WHERE username = %s', (username,))
             data = cursor2.fetchone()
@@ -289,9 +289,9 @@ def create_app(test_config=None):
         if request.method == 'POST':
             notFriend = request.form['notFriend']
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
@@ -316,9 +316,9 @@ def create_app(test_config=None):
         if request.method == 'POST':
             friend = request.form['friend']
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b33b6415873ff5',
-                             password='d1a1b9a1',
-                             db='heroku_1e2700f5b989c0b',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
