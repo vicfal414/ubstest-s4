@@ -204,14 +204,14 @@ def create_app(test_config=None):
             SelectDuration = request.form['SelectDuration']
             SelectCategory = request.form['SelectCategory']
             theImpact = request.form['theImpact']
-            sugegstionsHelp = request.form['sugegstionsHelp']
+            suggestionsHelp = request.form['Suggestions']
 
             newChallenge['name'] = challengeName
             newChallenge['description'] = shortDescription 
             newChallenge['duration'] = SelectDuration 
             newChallenge['category'] = SelectCategory 
             newChallenge['impact'] = theImpact 
-            newChallenge['suggestions'] = sugegstionsHelp 
+            newChallenge['suggestions'] = suggestionsHelp 
   
         elif request.method == 'POST':
             #Form is empty
