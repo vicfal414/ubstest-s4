@@ -198,7 +198,7 @@ def create_app(test_config=None):
     @app.route("/addingcustom", methods = ['GET', 'POST'])
     def addingcustom():
         msg = ''
-        if request.method == 'POST' and 'challengeName' in request.form and 'shortDescription' in request.form and 'SelectDuration' in request.form and 'SelectCategory' in request.form and 'theImpact' in request.form and 'sugegstionsHelp' in request.form:
+        if request.method == 'POST' and 'challengeName' in request.form and 'shortDescription' in request.form and 'SelectDuration' in request.form and 'SelectCategory' in request.form and 'theImpact' in request.form and 'Suggestions' in request.form:
             challengeName = request.form['challengeName']
             shortDescription = request.form['shortDescription']
             SelectDuration = request.form['SelectDuration']
