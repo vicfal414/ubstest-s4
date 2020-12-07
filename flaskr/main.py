@@ -1,21 +1,11 @@
 import os
 import re
 
-from flask import Flask
-from flask import render_template
-from flask import request
-from flask import redirect
-from flask import url_for
-from flask import session
-from flask import flash
-# from flask_mysqldb import MySQL
-# from flask_mysql import MySQL
-# import pymysql
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import MySQLdb
 import pymysql.cursors
 
 import random
-from users import Users
 
 # mysql = MySQL()
 
@@ -32,7 +22,7 @@ def create_app(test_config=None):
     )
 
     # mysql.init_app(app)
-
+   
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -56,14 +46,18 @@ def create_app(test_config=None):
     def home():
         return render_template("index.html")
 
+    @app.route("/dash")
+    def dash():
+        return render_template("userdashboard.html")
+
     @app.route("/challenge")
     def chall():
         return render_template("challenge_list.html")
-
+    
     @app.route("/challenge1")
     def chall_pg1():
         return render_template("challenge_pages/challenge1.html")
-
+    
     @app.route("/challenge2")
     def chall_pg2():
         return render_template("challenge_pages/challenge2.html")
@@ -79,7 +73,7 @@ def create_app(test_config=None):
     @app.route("/challenge5")
     def chall_pg5():
         return render_template("challenge_pages/challenge5.html")
-
+    
     @app.route("/challenge6")
     def chall_pg6():
         return render_template("challenge_pages/challenge6.html")
@@ -89,20 +83,164 @@ def create_app(test_config=None):
     def chall_pg7():
         return render_template("challenge_pages/custom_challenge.html")
 
-    @app.route("/friends")
+
+    def getProfilePic(userid):
+        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+            user='b33b6415873ff5',
+            password='d1a1b9a1',
+            db='heroku_1e2700f5b989c0b',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor)
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT picture FROM accounts where id = %s', (userid))
+            pic = cursor.fetchone()
+            connection.close()
+        return pic
+
+    def getName(userid):
+        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+            user='b33b6415873ff5',
+            password='d1a1b9a1',
+            db='heroku_1e2700f5b989c0b',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor)
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT fname FROM accounts where id = %s', (userid)) 
+            fname = cursor.fetchone()
+            rest = cursor.fetchall()
+            cursor.execute('SELECT lname FROM accounts where id = %s', (userid))
+            lname = cursor.fetchone()
+            rest2 = cursor.fetchall()
+        connection.close()
+        fullName = str(fname) + str(lname)
+                
+        return fullName
+
+
+    @app.route("/friends", methods=['GET','POST'])
     def friend():
+        
+        connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+            user='b33b6415873ff5',
+            password='d1a1b9a1',
+            db='heroku_1e2700f5b989c0b',
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor)
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT JSON_TYPE(friendsList) FROM accounts WHERE id = %s', (session['id']))
+            fList = cursor.fetchone()
+            session["friends"] = fList.split("|")
+            rest = cursor.fetchall()
+            cursor.execute('SELECT id FROM accounts WHERE id NOT IN %s AND WHERE id != %s LIMIT 10', (session["friends"], session['id'])) 
+            nFList = cursor.fetchall()
+            session["notFriends"] = nFList['id'].split("|")
+        connection.close()
+
+        if request.method == 'POST' and 'loadMoreFriend' in request.form:
+            return redirect(url_for('loadMoreFriend'))
+
+        if request.method == 'POST' and 'loadMoreNotFriend' in request.form:
+            return redirect(url_for('loadMoreNotFriend'))
+
+        if request.method == 'POST' and 'search' in request.form:
+            search = request.form['search']
+            session['search'] = search
+            return redirect(url_for('search'))
+
+        if request.method == 'POST' and 'user' in request.form :
+            user = request.form['user']
+            session['user'] = user
+            return redirect(url_for('publicProfile'))
+
+        if request.method == 'POST' and 'notFriend' in request.form :
+            notFriend = request.form['notFriend']
+            session['notFriend'] = notFriend
+            return redirect(url_for('addFriend'))
+        
+        if request.method == 'POST' and 'friend' in request.form:
+            friend = request.form['friend']
+            session['friend'] = friend
+            return redirect(url_for('remFriend'))
+
         return render_template("friends.html",
-            friendList=Users['friends'],
-            notFriendList=Users['notFriends'])
+            loadMoreFriend = False,
+            loadMoreNotFriend = False, 
+            msg='')
 
-    @app.route("/publicProfileFriend")
-    def publicProfileFriend():
-        return render_template("publicProfileFriend.html")
+    @app.route('/results')
+    def search_results(search):
 
-    @app.route("/publicProfileNotFriend")
-    def publicProfileNotFriend():
-        return render_template("publicProfileNotFriend.html")
+        #puts first and last name of search results in a list
+        results = [(str(data[1]) + " " + str(data[2])) for data in search]
 
+        # display results
+        return render_template('results.html', results=results)
+
+    @app.route('/search')
+    def search():
+            msg = ''
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                user='b33b6415873ff5',
+                password='d1a1b9a1',
+                db='heroku_1e2700f5b989c0b',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor)
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM accounts WHERE username = %s OR email = %s OR fname = %s OR lname = %s', (session['search'], session['search'], session['search'], session['search']))
+                data = cursor.fetchall()
+            if data == []:
+                msg = (str(session['search']) + ' is not a user in our system.')
+            else:
+                #render results template with data list
+                search_results(data)
+            connection.close()
+
+            return render_template("friends.html",
+                loadMoreFriend = False,
+                loadMoreNotFriend = False, 
+                msg=msg)
+    
+    @app.route("/publicProfile", methods = ['GET', 'POST'])
+    def publicProfile():
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                user='b33b6415873ff5',
+                password='d1a1b9a1',
+                db='heroku_1e2700f5b989c0b',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor)
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT friendsList FROM accounts WHERE id = %s', (session['user']))
+                fList = cursor.fetchone()
+                session["userFriends"] = fList.split("|")
+                rest = cursor.fetchall()
+                cursor.execute('SELECT progress, completed FROM dashboard WHERE user = %s', (session['user']))
+                challs = cursor.fetchone()
+                connection.close()
+                if challs:
+                    pro = challs['progress'].split("|")
+                    com = challs['completed'].split("|")
+                    session['progress'] = pro
+                    session['completed'] = com
+
+            if request.method == 'POST' and 'loadMorePub' in request.form:
+                return redirect(url_for('loadMorePub'))
+
+            if request.method == 'POST' and 'user' in request.form :
+                user = request.form['user']
+                session['user'] = user
+                return redirect(url_for('publicProfile'))
+
+            if request.method == 'POST' and 'notFriend' in request.form :
+                notFriend = request.form['notFriend']
+                session['notFriend'] = notFriend
+                return redirect(url_for('addFriend'))
+            
+            if request.method == 'POST' and 'friend' in request.form:
+                friend = request.form['friend']
+                session['friend'] = friend
+                return redirect(url_for('remFriend')) 
+            return render_template("publicProfile.html",
+                loadMore = False)
 
     @app.route("/login", methods = ['GET', 'POST'])
     def login():
@@ -112,29 +250,26 @@ def create_app(test_config=None):
             password = request.form['password']
             # cur = mysql.connection.cursor()
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b2cb10b2b21b72',
-                             password='1b8b9cc5',
-                             db='heroku_318469e412eb0ae',
+                             user='b33b6415873ff5',
+                             password='d1a1b9a1',
+                             db='heroku_1e2700f5b989c0b',
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password, ))
+                cursor.execute('SELECT * FROM accounts WHERE username = %s AND password = %s', (username, password ))
             data = cursor.fetchone()
             print(data)
             if data:
                 session['logged_in'] = True
                 session['id'] = data['id']
                 session['username'] = data['username']
-                session['fname'] = data['fname']
-                session['lname'] = data['lname']
                 flash('You are logged in')
                 return redirect(url_for('home'))
             else:
                 msg = 'Invalid Credentials. Please try again.'
             connection.close()
         return render_template("login.html", msg = msg)
-
-
+    
     @app.route('/logout')
     def logout():
         session.pop('logged_in', None)
@@ -152,12 +287,12 @@ def create_app(test_config=None):
             email = request.form['email']
             fname = request.form['fname']
             lname = request.form['lname']
-            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                             user='b2cb10b2b21b72',
-                             password='1b8b9cc5',
-                             db='heroku_318469e412eb0ae',
-                             charset='utf8mb4',
-                             cursorclass=pymysql.cursors.DictCursor)
+            connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                user='b33b6415873ff5',
+                password='d1a1b9a1',
+                db='heroku_1e2700f5b989c0b',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
                 cursor2.execute('SELECT * FROM accounts WHERE username = %s', (username,))
             data = cursor2.fetchone()
@@ -175,77 +310,91 @@ def create_app(test_config=None):
                 msg = 'Please enter your information.'
             else:
                 with connection2.cursor() as cursor3:
-                    cursor3.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s, %s, NULL)', (fname, lname, username, password, email,))
-                    cursor3.execute('INSERT INTO dashboard VALUES (%s, NULL, NULL, NULL)', (username))
+                    cursor3.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s, %s)', (fname, lname, username, password, email,))
                 connection2.commit()
                 msg = 'You have successfully registered!'
             connection2.close()
         elif request.method == 'POST':
             #Form is empty
             msg = 'Please enter your information.'
-
+        
         return render_template("signup.html", msg = msg)
 
     @app.route("/css")
     def css():
-        return render_template("static/css/style.css")
-
+        return render_template("static/css/style.css") 
+    
     @app.route("/random")
     def rand_chall():
         number = random.randint(1, 6)
         site = "chall_pg" + str(number)
         return redirect(url_for(site))
-
-    def getUserName(name):
-        for uType in Users:
-            for user in Users[uType]:
-                if user['name'] == name:
-                    return user['username']
-        return None
-
-    def getProfilePic(name):
-        for uType in Users:
-            for user in Users[uType]:
-                if user['name'] == name:
-                    return user['profilePic']
-        return None
-
-        @app.route("/dash")
-        def dash():
-            if session['logged_in'] == True:
-                connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
-                    user='b2cb10b2b21b72',
-                    password='1b8b9cc5',
-                    db='heroku_318469e412eb0ae',
-                    charset='utf8mb4',
-                cursorclass=pymysql.cursors.DictCursor)
-                with connection.cursor() as cursor:
-                    cursor.execute('SELECT saved, progress, completed FROM dashboard WHERE user = %s', (session['username']))
-                challs = cursor.fetchone()
-                if challs:
-                    sav = challs['saved'].split("|")
-                    pro = challs['progress'].split("|")
-                    com = challs['completed'].split("|")
-                    session['saved'] = sav
-                    session['progress'] = pro
-                    session['completed'] = com
-            return render_template("userdashboard.html")
-
-    @app.route("/addFriend", methods = ['POST'])
+        
+    
+    @app.route("/addFriend")
     def addFriend():
-        if request.method == 'POST':
-            name = request.form['notFriend']
-            newFriend = {'username': getUserName(name), 'name': name, 'profilePic':  getProfilePic(name)}
-            Users['friends'].append(newFriend)
-            Users['notFriends'].remove(newFriend)
-        return redirect(url_for('friend'))
+        
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                user='b33b6415873ff5',
+                password='d1a1b9a1',
+                db='heroku_1e2700f5b989c0b',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor)
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT friendsList FROM accounts WHERE id = %s', (session['id']))
+                fList = cursor.fetchone()
+                fList.append("|"+session['notFriend'])
 
-    @app.route("/remFriend", methods = ['POST'])
+                cursor.execute('UPDATE TABLE accounts SET friendsList = %s WHERE id = %s', (fList, session['id']))
+                connection.commit()
+            #add the user_id to the current user's friendList
+            
+            connection.close()
+            return redirect(url_for('friend'))
+      
+    @app.route("/remFriend")
     def remFriend():
-        if request.method == 'POST':
-            name = request.form['friend']
-            unFriend = {'username': getUserName(name), 'name': name, 'profilePic': getProfilePic(name)}
-            Users['notFriends'].append(unFriend)
-            Users['friends'].remove(unFriend)
-        return redirect(url_for('friend'))
+        
+            connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                user='b33b6415873ff5',
+                password='d1a1b9a1',
+                db='heroku_1e2700f5b989c0b',
+                charset='utf8mb4',
+                cursorclass=pymysql.cursors.DictCursor)
+            with connection.cursor() as cursor:
+                fL = ''
+                cursor.execute('SELECT friendsList FROM accounts WHERE id = %s', (session['id']))
+                fList = cursor.fetchone()
+                session["friends"] = fList.split("|")
+                rest = cursor.fetchall()
+                session["friends"].remove(session['friend'])
+                for uid in session["friends"]:
+                    fL = fL+'|'+str(uid)
+                cursor.execute('UPDATE TABLE accounts SET friendsList = %s WHERE id = %s', (fL, session['id']))
+                connection.commit()
+            #remove the user_id from the current user's friendList
+
+            connection.close()
+            return redirect(url_for('friend'))
+
+
+    @app.route("/loadMoreFriend")
+    def loadMoreFriend():
+        return render_template("friends.html",
+            loadMoreFriend = True,
+            loadMoreNotFriend = False, 
+            msg='')
+
+    @app.route("/loadMoreNotFriend")
+    def loadMoreNotFriend():
+        return render_template("friends.html",
+            loadMoreFriend = False,
+            loadMoreNotFriend = True, 
+            msg='')
+
+    @app.route("/loadMorePub")
+    def loadMorePub():
+        return render_template("publicProfile.html",
+            loadMore = True)
+
     return app
