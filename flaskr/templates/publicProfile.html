@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='style.css') }}>
+
+  <!-- import font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+  <title>Profile</title>
+</head>
+<body>
+	<!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #86E49E;">
+		<a class="navbar-brand" href="{{ url_for('home') }}"><img src="static/logo.png" width="30" height="30"
+				alt="">(Yo)UB Sustainable</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('home') }}">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('chall') }}">Challenges</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Friends<span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('dash') }}">Dashboard</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				{% if session['logged_in'] == True %}
+				<li>
+					<a href="{{ url_for('logout') }}" class="btn btn-outline-danger my-2 my-sm-0">Logout</a>
+				</li>
+				{% else %}
+				<li>
+					<a href="{{ url_for('login') }}" class="btn btn-outline-success my-2 my-sm-0">Log In</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
+  <!--end of Navbar-->
+
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-6">
+          <h1>{{ getName(session.user) }}</h1>
+          <p> Eco Superstar</p>
+          <div class="row">
+            <div class="col">
+              <h2>{{session.completed|length}}</h2>
+              <p>completed</p>
+            </div>
+            <div class="col">
+              <h2>{{session.progress|length}}</h2>
+              <p>in progress</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <!--get the correct code from dashboard.html-->
+          <img src ="{{ getProfilePic(session.user) }}" class="pfp img-thumbnail">
+        </div>
+        <!--Functionality needed-->
+        
+        <div class="col-1">
+          {% if session.user in session.friends %}
+          <form action="/remFriend" method="POST">
+						<button 
+							id='friend'
+							name="friend" 
+							type="submit" 
+							value="{{ session.user }}"
+							class="btn btn-secondary btnbtm">Unfriend</button>
+					</form>
+          {% else %}
+          <form action="/addFriend" method="POST">
+            <button 
+              id='notFriend'
+              name="notFriend" 
+              type="submit"
+              value="{{ session.user }}"
+              class="btn btn-secondary btnbtm">Add Friend</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <br>
+
+      <!-- IN PROGRESS SECTION -->
+      <div class="row">
+        <div class = "col-7">
+          <div class="container">
+            <div class="row greenback">
+              <h3>IN PROGRESS</h3>
+            </div>
+            <div class="row-cols-1">
+              <!-- challenge progress bar -->
+              {% for challenge in session.progress %}
+              <div class="col-3 ctsize">
+                <p>{{challenge}}</p>
+                <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-hourglass-split" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0c0 .701.478 1.236 1.011 1.492A3.5 3.5 0 0 1 11.5 13s-.866-1.299-3-1.48V8.35z"/>
+                </svg>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <br>
+
+          <!-- COMPLETED SECTION -->
+          <div class="container">
+            <div class="row greenback">
+              <h3>COMPLETED</h3>
+            </div>
+            div class="row greenborder">
+              {% for challenge in session.completed %}
+              <div class="col-3 ctsize">
+                <p>{{challenge}}</p>
+                <svg width="50" height="50" viewBox="0 0 16 16" class="bi bi-star-fill btmspc" fill="gray" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                </svg>
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+        <br>
+
+        <div class = "col">
+          <div class="container" id = "friendList">
+            <div class="row greenback">
+              <h3>{{ getName(session.user) }}'s Friends</h3>
+            </div>
+            <p>TOTAL FRIENDS: {{ session.userFriends | length }}</p>
+            <div class="row greenborder">
+              {% if session.userFriends | length == 0 %}
+              <p>This user has no friends to show :(</p>
+              {% elif session.userFriends | length <= 5 %}
+                <table>
+                  {% for friend in session.userFriends %}
+                    
+                      <tr>
+                        <td>
+                          <form action="/publicProfile" method="POST">
+                            <button 
+                              id='user'
+                              name="user" 
+                              type="submit" 
+                              value="{{ friend }}">
+                                <img src="{{ getProfilePic(friend) }}" 
+                                  class="pfp img-thumbnail">
+                            </button>
+                          </form>
+                        </td>
+                        <td>{{getName(friend)}}</td>
+                        
+                        <td>
+                          {% if friend in session.friends %}
+                          <form action="/remFriend" method="POST">
+                            <button 
+                              id='friend'
+                              name="friend" 
+                              type="submit" 
+                              value="{{ friend }}"
+                              class="btn btn-secondary btnbtm">Unfriend</button>
+                          </form>
+                          {% else %}
+                          <form action="/addFriend" method="POST">
+                            <button 
+                              id='notFriend'
+                              name="notFriend" 
+                              type="submit"
+                              value="{{ friend }}"
+                              class="btn btn-secondary btnbtm">Add Friend</button>
+                          </form>
+                          {% endif %}
+                        </td>
+                        
+                      </tr>
+                  {% endfor %}
+                </table>
+              {% elif loadMore == False %}
+                <table>
+                {% for friend in range(5) %}
+                  
+                    <tr>
+                      <td>
+                        <form action="/publicProfile" method="POST">
+                          <button 
+                            id='user'
+                            name="user" 
+                            type="submit" 
+                            value="{{ session.userFriends[friend] }}">
+                              <img src="{{ getProfilePic(session.userFriends[friend]) }}" 
+                                class="pfp img-thumbnail">
+                          </button>
+                        </form>
+                      </td>
+                      <td>{{getName(session.userFriends[friend])}}</td>
+                      <td>
+                        {% if session.userFriends[friend] in session.friends %}
+                        <form action="/remFriend" method="POST">
+                          <button 
+                            id='friend'
+                            name="friend" 
+                            type="submit" 
+                            value="{{ session.userFriends[friend] }}"
+                            class="btn btn-secondary btnbtm">Unfriend</button>
+                        </form>
+                        {% else %}
+                        <form action="/addFriend" method="POST">
+                          <button 
+                            id='notFriend'
+                            name="notFriend" 
+                            type="submit"
+                            value="{{ session.userFriends[friend] }}"
+                            class="btn btn-secondary btnbtm">Add Friend</button>
+                        </form>
+                        {% endif %}
+                      </td>
+                    </tr>
+                  
+                {% endfor %}
+                  <tr>
+                    <td>
+                      <form action = "/loadMorePub" method = "POST">
+                        <button 
+                          name = "loadMorePub" 
+                          type = "submit"  
+                          class="btn btn-secondary btnbtm">Load More</button>
+                      </form>
+                    </td>
+                  </tr>
+                </table>
+              {% else %}
+                <table>
+                {% for friend in range(10) %}
+                  <tr>
+                    <td>
+                      <form action="/publicProfile" method="POST">
+                        <button 
+                          id='user'
+                          name="user" 
+                          type="submit" 
+                          value="{{ session.userFriends[friend] }}">
+                            <img src="{{ getProfilePic(session.userFriends[friend]) }}" 
+                              class="pfp img-thumbnail">
+                        </button>
+                      </form>
+                    </td>
+                    <td>{{getName(session.userFriends[friend])}}</td>
+                  
+                    <td>
+                      {% if session.userFriends[friend] in session.friends %}
+                      <form action="/remFriend" method="POST">
+                        <button 
+                          id='friend'
+                          name="friend" 
+                          type="submit" 
+                          value="{{ session.userFriends[friend] }}"
+                          class="btn btn-secondary btnbtm">Unfriend</button>
+                      </form>
+                    
+                      {% else %}
+                      <form action="/addFriend" method="POST">
+                        <button 
+                          id='notFriend'
+                          name="notFriend" 
+                          type="submit"
+                          value="{{ session.userFriends[friend] }}"
+                          class="btn btn-secondary btnbtm">Add Friend</button>
+                      </form>
+                      {% endif %}
+                    </td>
+                    
+                  </tr>
+                {% endfor %}
+                </table>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -83,19 +83,15 @@
 								{% for friend in session.friends %}
 								<tr>
 									<td>
-										<!--this probably needs to be an action since we'll be calling publicProfile from main.py-->
-										<a href="{{ url_for('publicProfile') }}">
-											<img src="{{ getProfilePic(friend) }}" 
-												class="pfp img-thumbnail">
-										</a>
-										<form action="/remFriend" method="POST">
-											<!--value needs to be changed-->
+										<form action="/publicProfile" method="POST">
 											<button 
-												id='friend'
-												name="friend" 
+												id='user'
+												name="user" 
 												type="submit" 
-												value="{{ friend }}"
-												class="btn btn-secondary btnbtm">Unfriend</button>
+												value="{{ friend }}">
+													<img src="{{ getProfilePic(friend) }}" 
+														class="pfp img-thumbnail">
+											</button>
 										</form>
 									</td>
 									<td>{{ getName(friend) }}</td>
@@ -107,7 +103,7 @@
 												id='friend'
 												name="friend" 
 												type="submit" 
-												value="{{ friend['name'] }}"
+												value="{{ friend }}"
 												class="btn btn-secondary btnbtm">Unfriend</button>
 										</form>
 									</td>
@@ -119,10 +115,16 @@
 								{% for friend in range(5) %}
 								<tr>
 									<td>
-										<a href="{{ url_for('publicProfile') }}">
-											<img src="{{ getProfilePic(session.friends[friend]) }}" 
-												class="pfp img-thumbnail">
-										</a>
+										<form action="/publicProfile" method="POST">
+											<button 
+												id='user'
+												name="user" 
+												type="submit" 
+												value="{{ friend }}">
+													<img src="{{ getProfilePic(session.friends[friend]) }}" 
+														class="pfp img-thumbnail">
+											</button>
+										</form>
 									</td>
 									<td>{{ getName(session.friends[friend]) }}</td>
 									<td>
@@ -133,7 +135,7 @@
 												id='friend'
 												name="friend" 
 												type="submit" 
-												value="{{ session.friend[friend] }}"
+												value="{{ session.friends[friend] }}"
 												class="btn btn-secondary btnbtm">Unfriend</button>
 										</form>
 									</td>
@@ -156,10 +158,16 @@
 								{% for friend in range(10) %}
 								<tr>
 									<td>
-										<a href="{{ url_for('publicProfile') }}">
-											<img src="{{ getProfilePic(session.friends[friend]) }}"
-											class="pfp img-thumbnail">
-										</a>
+										<form action="/publicProfile" method="POST">
+											<button 
+												id='user'
+												name="user" 
+												type="submit" 
+												value="{{ friend }}">
+													<img src="{{ getProfilePic(session.friends[friend]) }}" 
+														class="pfp img-thumbnail">
+											</button>
+										</form>
 									</td>
 									<td>{{ getName(session.friends[friend]) }}</td>
 									<td>
@@ -187,10 +195,16 @@
 								{% for notFriend in range(5) %}
 								<tr>
 									<td>
-										<a href="{{ url_for('publicProfileNotFriend') }}">
-											<img src="{{ getProfilePic(session.notFriends[notFriend]) }}"
-												class="pfp img-thumbnail">
-										</a>
+										<form action="/publicProfile" method="POST">
+											<button 
+												id='user'
+												name="user" 
+												type="submit" 
+												value="{{ notFriend }}">
+													<img src="{{ getProfilePic(session.notFriends[notFriend]) }}" 
+														class="pfp img-thumbnail">
+											</button>
+										</form>
 									</td>
 									<td>{{ getName(session.notFriends[notFriend]) }}</td>
 									<td>
@@ -222,10 +236,16 @@
 								{% for notFriend in range(10) %}
 								<tr>
 									<td>
-										<a href="{{ url_for('publicProfileNotFriend') }}">
-											<img src="{{ getProfilePic(session.notFriends[notFriend]) }}"
-												class="pfp img-thumbnail">
-										</a>
+										<form action="/publicProfile" method="POST">
+											<button 
+												id='user'
+												name="user" 
+												type="submit" 
+												value="{{ notFriend }}">
+													<img src="{{ getProfilePic(session.notFriends[notFriend]) }}" 
+														class="pfp img-thumbnail">
+											</button>
+										</form>
 									</td>
 									<td>{{ getName(session.notFriends[notFriend]) }}</td>
 									<td>
