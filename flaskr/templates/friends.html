@@ -83,17 +83,28 @@
 								{% for friend in session.friends %}
 								<tr>
 									<td>
-										<!--this probably needs to be an action since we'll be calling publicProfileFriend from main.py-->
-										<a href="{{ url_for('publicProfileFriend') }}">
-											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (friend)) }}" 
+										<!--this probably needs to be an action since we'll be calling publicProfile from main.py-->
+										<a href="{{ url_for('publicProfile') }}">
+											<img src="{{ getProfilePic(friend) }}" 
 												class="pfp img-thumbnail">
 										</a>
+										<form action="/remFriend" method="POST">
+											<!--value needs to be changed-->
+											<button 
+												id='friend'
+												name="friend" 
+												type="submit" 
+												value="{{ friend }}"
+												class="btn btn-secondary btnbtm">Unfriend</button>
+										</form>
 									</td>
-									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (friend)) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (friend)) }}</td>
+									<td>{{ getName(friend) }}</td>
 									<td>
 										<!--TO DO-->
 										<form action="/remFriend" method="POST">
-											<button 
+											<!--value needs to be changed-->
+											<button
+												id='friend'
 												name="friend" 
 												type="submit" 
 												value="{{ friend['name'] }}"
@@ -108,19 +119,21 @@
 								{% for friend in range(5) %}
 								<tr>
 									<td>
-										<a href="{{ url_for('publicProfileFriend') }}">
-											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (friendList[friend])) }}" 
+										<a href="{{ url_for('publicProfile') }}">
+											<img src="{{ getProfilePic(session.friends[friend]) }}" 
 												class="pfp img-thumbnail">
 										</a>
 									</td>
-									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (friendList[friend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (friendList[friend])) }}</td>
+									<td>{{ getName(session.friends[friend]) }}</td>
 									<td>
 										<!--TO DO-->
 										<form action="/remFriend" method="POST">
+											<!--value needs to be changed-->
 											<button 
+												id='friend'
 												name="friend" 
 												type="submit" 
-												value="{{ friendList[friend]['name'] }}"
+												value="{{ session.friend[friend] }}"
 												class="btn btn-secondary btnbtm">Unfriend</button>
 										</form>
 									</td>
@@ -130,6 +143,7 @@
 									<td>
 										<form action="/loadMoreFriend" method="POST">
 											<button 
+												id='loadMoreFriend'
 												name="loadMoreFriend" 
 												type="submit"
 												class="btn btn-secondary btnbtm">Load More</button>
@@ -142,19 +156,20 @@
 								{% for friend in range(10) %}
 								<tr>
 									<td>
-										<a href="{{ url_for('publicProfileFriend') }}">
-											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (friendList[friend])) }}"
+										<a href="{{ url_for('publicProfile') }}">
+											<img src="{{ getProfilePic(session.friends[friend]) }}"
 											class="pfp img-thumbnail">
 										</a>
 									</td>
-									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (friendList[friend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (friendList[friend])) }}</td>
+									<td>{{ getName(session.friends[friend]) }}</td>
 									<td>
 										<!--TO DO-->
 										<form action="/remFriend" method="POST">
 											<button 
+												id='friend'
 												name="friend" 
 												type="submit" 
-												value="{{ friendList[friend]['name'] }}"
+												value="{{ session.friends[friend] }}"
 												class="btn btn-secondary btnbtm">Unfriend</button>
 										</form>
 									</td>
@@ -165,24 +180,27 @@
 						</div>
 						<!--Not Friends List-->
 						<div class="col greenborder">
-							{% if loadMoreNotFriend == False %}
+							{% if session.notFriends | length == 0 %}
+							<p>Apparently you're friends with all of our app's users.</p>
+							{% elif loadMoreNotFriend == False %}
 							<table>
 								{% for notFriend in range(5) %}
 								<tr>
 									<td>
 										<a href="{{ url_for('publicProfileNotFriend') }}">
-											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (notFriendList[notFriend])) }}"
+											<img src="{{ getProfilePic(session.notFriends[notFriend]) }}"
 												class="pfp img-thumbnail">
 										</a>
 									</td>
-									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (notFriendList[notFriend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (notFriendList[notFriend])) }}</td>
+									<td>{{ getName(session.notFriends[notFriend]) }}</td>
 									<td>
 										<!--TO DO-->
 										<form action="/addFriend" method="POST">
 											<button 
+												id='notFriend'
 												name="notFriend" 
 												type="submit"
-												value="{{ notFriendList[notFriend]['name'] }}"
+												value="{{ session.notFriends[notFriend] }}"
 												class="btn btn-secondary btnbtm">Add Friend</button>
 										</form>
 									</td>
@@ -205,18 +223,19 @@
 								<tr>
 									<td>
 										<a href="{{ url_for('publicProfileNotFriend') }}">
-											<img src="{{ cursor.execute('SELECT picture FROM accounts where id = %s', (notFriendList[notFriend])) }}"
+											<img src="{{ getProfilePic(session.notFriends[notFriend]) }}"
 												class="pfp img-thumbnail">
 										</a>
 									</td>
-									<td>{{ cursor.execute('SELECT fname FROM accounts where id = %s', (notFriendList[notFriend])) }} {{ cursor.execute('SELECT lname FROM accounts where id = %s', (notFriendList[notFriend])) }}</td>
+									<td>{{ getName(session.notFriends[notFriend]) }}</td>
 									<td>
 										<!--TO DO-->
 										<form action="/addFriend" method="POST">
 											<button 
+												id='notFriend'
 												name="notFriend" 
 												type="submit"
-												value="{{ notFriendList[notFriend]['name'] }}"
+												value="{{ session.notFriends[notFriend] }}"
 												class="btn btn-secondary btnbtm">Add Friend</button>
 										</form>
 									</td>
@@ -231,13 +250,14 @@
 					<div class="row">
 						<form action="/search" method="POST">
 							<input 
+								id='search'
 								type="text" 
 								placeholder="Search Users..." 
 								name="search" 
 								value="{{  request.form.search }}">
 						</form>
 					</div>
-					<p>{{msg}}</p>
+					<p>{{ msg }}</p>
 				</div>
 			</div>
 		</div>
