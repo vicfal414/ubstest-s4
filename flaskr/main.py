@@ -233,9 +233,10 @@ def create_app(test_config=None):
                              charset='utf8mb4',
                              cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
-                progress_chall = cursor2.execute('SELECT progress FROM dashboard WHERE user = %s', (currrent_user))
-                progress_chall += added_chall_name
-                cursor2.execute('UPDATE dashboard  SET progress =%s WHERE user=%s', (progess_chall,current_user))
+                cursor2.execute('SELECT progress FROM dashboard WHERE user = %s', (current_user))
+                progress_chall = curson2.fetchone()
+                upd_progress = progress_chall['progress'] + added_chall_name
+                cursor2.execute('UPDATE dashboard  SET progress =%s WHERE user=%s', (upd_progress,current_user))
             connection2.commit()
             connection2.close()
         return redirect(url_for('dash'))
