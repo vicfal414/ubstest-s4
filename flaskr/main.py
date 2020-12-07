@@ -58,7 +58,7 @@ def create_app(test_config=None):
     def home():
         return render_template("index.html")
 
-   @app.route("/dash")
+    @app.route("/dash")
     def dash():
         if session.get('logged_in') == True:
             connection = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
@@ -254,8 +254,9 @@ def create_app(test_config=None):
                              cursorclass=pymysql.cursors.DictCursor)
             with connection2.cursor() as cursor2:
                 cursor2.execute('SELECT progress FROM dashboard WHERE user = %s', (current_user))
-                progress_chall = curson2.fetchone()
+                progress_chall = cursor2.fetchone()
                 upd_progress = progress_chall['progress'] + added_chall_name
+                # print(upd_progress)
                 cursor2.execute('UPDATE dashboard  SET progress =%s WHERE user=%s', (upd_progress,current_user))
             connection2.commit()
             connection2.close()
