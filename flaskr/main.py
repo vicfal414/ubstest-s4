@@ -206,12 +206,13 @@ def create_app(test_config=None):
             theImpact = request.form['theImpact']
             suggestionsHelp = request.form['Suggestions']
 
-            newChallenge['name'] = challengeName
-            newChallenge['description'] = shortDescription 
-            newChallenge['duration'] = SelectDuration 
-            newChallenge['category'] = SelectCategory 
-            newChallenge['impact'] = theImpact 
-            newChallenge['suggestions'] = suggestionsHelp 
+            added_c = {newChallenge['name'] = challengeName,
+            newChallenge['description'] = shortDescription ,
+            newChallenge['duration'] = SelectDuration ,
+            newChallenge['category'] = SelectCategory ,
+            newChallenge['impact'] = theImpact ,
+            newChallenge['suggestions'] = suggestionsHelp}
+ 
   
         elif request.method == 'POST':
             #Form is empty

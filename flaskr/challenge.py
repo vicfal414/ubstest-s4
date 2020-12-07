@@ -1,15 +1,15 @@
-"""newChallenge = {'challenge': ['name': "New Custom Challenge", 
+newChallenge = {'challenge': {'name': "New Custom Challenge", 
     'description': "desc", 
     'duration': "week",
     'category': "type50",
     'impact': "this is imp",
-    'suggestions': "pls work"]
+    'suggestions': "pls work"}
     }
-"""
-newChallenge = {
+
+"""newChallenge = {
     'name': "", 
     'description': "challengeTasks", 
     'duration': "challengeTasks",
     'category': "challengeTasks",
     'impact': "challengeTasks",
-    'suggestions': "challengeTasks"}
+    'suggestions': "challengeTasks"}"""
