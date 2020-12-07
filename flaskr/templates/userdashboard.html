@@ -73,7 +73,17 @@
           </div>
         </div>
         <div class="col-4">
-          <img src ="https://via.placeholder.com/200" class="pfp img-thumbnail">
+          {% set m = session.email  %}
+          {% set u = session.username  %}
+          <!-- <h2> {{session.pro_pic}}</h2> -->
+          <img id = "profile" src = "" class="pfp img-thumbnail">
+          <p hidden id="hidden-p">{{session.pro_pic}}</p>
+          <script>
+            // let profilePic = {{ session.pro_pic }};
+            let url = document.getElementById("hidden-p").innerHTML;
+            console.log(url);
+            document.getElementById("profile").src = url;
+          </script>
         </div>
         <div class="col-1">
         </div>
