@@ -220,6 +220,26 @@ def create_app(test_config=None):
         #return render_template("challenge_pages/custom_challenge.html", msg = msg)
         return redirect(url_for('chall_pg8'))
 
+    #function for adding challenge
+    @app.route("/addChallenge", methods = ['POST'])
+    def addChallenge():
+        if request.method == 'POST':
+            added_chall_name = request.form['addChallenge']
+            current_user = session['username']
+            connection2 = pymysql.connect(host='us-cdbr-east-02.cleardb.com',
+                             user='b2cb10b2b21b72',
+                             password='1b8b9cc5',
+                             db='heroku_318469e412eb0ae',
+                             charset='utf8mb4',
+                             cursorclass=pymysql.cursors.DictCursor)
+            with connection2.cursor() as cursor2:
+                progress_chall = cursor2.execute('SELECT progress FROM dashboard WHERE user = %s', (currrent_user))
+                progress_chall += added_chall_name
+                cursor2.execute('UPDATE dashboard  SET progress =%s WHERE user=%s', (progess_chall,current_user))
+            connection2.commit()
+            connection2.close()
+        return redirect(url_for('dash'))
+
     @app.route("/css")
     def css():
         return render_template("static/css/style.css") 
